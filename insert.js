@@ -49,7 +49,7 @@ define(['text'], function(text){
             console.log ("WRITE START")
             if(moduleName in buildMap){
                 var content = buildMap[moduleName];
-                write('define("'+ pluginName +'!!!!!'+ moduleName +'", function(){ return '+ content +';});\n');
+                write('define("'+ pluginName +'!'+ moduleName +'", function(){ return '+ content +';});\n');
             }
         }
 
