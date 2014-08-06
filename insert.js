@@ -17,7 +17,7 @@ define(['text'], function(text){
     return {
 
         load : function(name, req, onLoad, config) {
-            if (( config.isBuild && (config.inlineJSON === false || name.indexOf(CACHE_BUST_QUERY_PARAM +'=') !== -1)) || (req.toUrl(name).indexOf('empty:') === 0)) {
+            if ( config.isBuild ) {
                 //avoid inlining cache busted JSON or if inlineJSON:false
                 //and don't inline files marked as empty!
                 onLoad(null);
@@ -27,24 +27,21 @@ define(['text'], function(text){
                         buildMap[name] = data;
                         onLoad(data);
                     } else {
-                        onLoad(jsonParse(data));
+                        onLoad(data);
                     }
-                },
-                    onLoad.error, {
-                        accept: 'application/json'
-                    }
+                }
                 );
             }
         },
 
-        normalize : function (name, normalize) {
-            // used normalize to avoid caching references to a "cache busted" request
-            if (name.indexOf(CACHE_BUST_FLAG) !== -1) {
-                name = cacheBust(name);
-            }
-            // resolve any relative paths
-            return normalize(name);
-        },
+        // normalize : function (name, normalize) {
+        //     // used normalize to avoid caching references to a "cache busted" request
+        //     if (name.indexOf(CACHE_BUST_FLAG) !== -1) {
+        //         name = cacheBust(name);
+        //     }
+        //     // resolve any relative paths
+        //     return normalize(name);
+        // },
 
         //write method based on RequireJS official text plugin by James Burke
         //https://github.com/jrburke/requirejs/blob/master/text.js
